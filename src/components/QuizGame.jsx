@@ -12,7 +12,6 @@ import {
 import DraggableQueryBuilder from './DraggableQueryBuilder';
 import LifeCounter from './LifeCounter';
 import LightbulbIcon from '@mui/icons-material/Lightbulb';
-import ShowTablesPopup from './ShowTablesPopup';
 
 const QuizGame = ({initialDatabase, initialDifficulty, onChangeDifficulty}) => {
     const [questions, setQuestions] = useState([]);
@@ -142,8 +141,6 @@ const QuizGame = ({initialDatabase, initialDifficulty, onChangeDifficulty}) => {
                                 )}
                             </Paper>
                         )}
-
-                        <ShowTablesPopup dbName={`${initialDatabase}_db`}/>
 
                         <DraggableQueryBuilder
                             expectedQuery={currentQuestion.expectedQuery}
