@@ -31,6 +31,17 @@ const QueryBox = styled(Paper)(({theme}) => ({
     },
 }));
 
+
+function formatMongoQuery(str) {
+    return str
+        .replace(/\{\s*/g, '{ ')
+        .replace(/\s*\}/g, ' }')
+        .replace(/:(?=\S)/g, ': ')
+        .replace(/(?<=\S):/g, ' :')
+        .replace(/\s+/g, ' ')
+        .trim();
+}
+
 const CodeBox = styled(Paper)(({theme}) => ({
     padding: theme.spacing(2),
     backgroundColor: '#f5f5f5',
