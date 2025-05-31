@@ -2,7 +2,7 @@
   "name": "mongolingo-backend",
   "version": "1.0.0",
   "scripts": {
-    "start": "node server.js",
+    "start": "npm run init-db && node server.js",
     "init-db": "node scripts/initDb.js",
     "dev": "nodemon server.js"
   },

@@ -13,7 +13,17 @@ import DraggableQueryBuilder from './DraggableQueryBuilder';
 import LifeCounter from './LifeCounter';
 import LightbulbIcon from '@mui/icons-material/Lightbulb';
 
+/**
+ * QuizGame component - Main quiz game component that manages the game state and logic
+ *
+ * @component
+ * @param {Object} props - Component props
+ * @param {string} props.initialDatabase - Initial database selection
+ * @param {string} props.initialDifficulty - Initial difficulty level
+ * @param {Function} props.onChangeDifficulty - Callback when difficulty changes
+ */
 const QuizGame = ({initialDatabase, initialDifficulty, onChangeDifficulty}) => {
+    // Game state
     const [questions, setQuestions] = useState([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [lives, setLives] = useState(3);
@@ -23,10 +33,29 @@ const QuizGame = ({initialDatabase, initialDifficulty, onChangeDifficulty}) => {
     const [showHints, setShowHints] = useState(false);
     const [showJson, setShowJson] = useState(false);
 
+    // Fetch questions when database or difficulty changes
     useEffect(() => {
         fetchQuestions();
     }, [initialDatabase, initialDifficulty]);
 
+    /**
+     * Formats a MongoDB query string for consistent comparison
+     * @param {string} str - Query string to format
+     * @returns {string} Formatted query string
+     */
+    function formatMongoQuery(str) {
+        return str
+            .replace(/\{\s*/g, '{ ')
+            .replace(/\s*\}/g, ' }')
+            .replace(/:(?=\S)/g, ': ')
+            .replace(/(?<=\S):/g, ' :')
+            .replace(/\s+/g, ' ')
+            .trim();
+    }
+
+    /**
+     * Fetches questions from API based on selected database and difficulty
+     */
     const fetchQuestions = async () => {
         try {
             const response = await fetch(
@@ -41,6 +70,9 @@ const QuizGame = ({initialDatabase, initialDifficulty, onChangeDifficulty}) => {
         }
     };
 
+    /**
+     * Resets the game state to initial values
+     */
     const resetGame = () => {
         setCurrentQuestionIndex(0);
         setLives(3);
@@ -49,6 +81,9 @@ const QuizGame = ({initialDatabase, initialDifficulty, onChangeDifficulty}) => {
         setShowHints(false);
     };
 
+    /**
+     * Handles showing the next available hint
+     */
     const handleNextHint = () => {
         if (!questions[currentQuestionIndex]?.hints) return;
         if (currentHintIndex < questions[currentQuestionIndex].hints.length - 1) {
@@ -56,11 +91,16 @@ const QuizGame = ({initialDatabase, initialDifficulty, onChangeDifficulty}) => {
         }
     };
 
+    /**
+     * Handles user answer submission and game progression
+     * @param {string} userAnswer - The user's submitted answer
+     */
     const handleAnswerSubmit = (userAnswer) => {
         const currentQuestion = questions[currentQuestionIndex];
-        const isCorrect = userAnswer.trim() === currentQuestion.expectedQuery.trim();
+        const isCorrect = formatMongoQuery(userAnswer) === formatMongoQuery(currentQuestion.expectedQuery);
 
-        if (!isCorrect) {
+        // Handle incorrect answer
+        if (isCorrect === false) {
             const newLives = lives - 1;
             setLives(newLives);
 
@@ -71,6 +111,7 @@ const QuizGame = ({initialDatabase, initialDifficulty, onChangeDifficulty}) => {
             }
         }
 
+        // Progress to next question or end game
         if (currentQuestionIndex < questions.length - 1) {
             setCurrentQuestionIndex(prev => prev + 1);
             setCurrentHintIndex(-1);
@@ -132,7 +173,7 @@ const QuizGame = ({initialDatabase, initialDifficulty, onChangeDifficulty}) => {
                                 {currentHintIndex < currentQuestion.hints.length - 1 && (
                                     <Button
                                         onClick={handleNextHint}
-                                        variant="outlined"
+                                        variant="contained"
                                         color="primary"
                                         sx={{mt: 1}}
                                     >

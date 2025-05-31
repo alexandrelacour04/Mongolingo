@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Variables globales */
 :root {
     --primary-color: #3498db;
     --text-color: black;
@@ -13,6 +14,7 @@
     --background-color: #ecf0f1;
 }
 
+/* Layout de base */
 body {
     margin: 0;
     min-height: 100vh;
@@ -32,6 +34,7 @@ body {
     align-items: center;
 }
 
+/* Conteneurs */
 .quiz-container {
     width: 100%;
     max-width: 800px;
@@ -42,6 +45,17 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.blocks-area {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+    background-color: #FFFFFF;
+    border-radius: 12px;
+    margin-top: 1rem;
+}
+
+/* Zones interactives */
 .answer-zone {
     min-height: 100px;
     border: 2px solid var(--border-color);
@@ -57,16 +71,7 @@ body {
     box-shadow: 0 0 0 4px rgba(88, 204, 2, 0.1);
 }
 
-.blocks-area {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 1rem;
-    padding: 1rem;
-    background-color: #FFFFFF;
-    border-radius: 12px;
-    margin-top: 1rem;
-}
-
+/* Éléments glissables */
 .drag-chip {
     background-color: #fff !important;
     border: 2px solid var(--primary-color) !important;
@@ -82,6 +87,7 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Composants Material-UI personnalisés */
 .MuiButton-contained {
     background-color: var(--primary-color) !important;
     color: white !important;
@@ -98,6 +104,7 @@ body {
     box-shadow: 0 6px 0 0 #45a100 !important;
 }
 
+/* Compteur de vies */
 .life-counter {
     display: flex;
     gap: 0.5rem;
@@ -109,6 +116,7 @@ body {
     font-size: 2rem;
 }
 
+/* Media queries */
 @media (max-width: 768px) {
     .quiz-container {
         margin: 1rem;
