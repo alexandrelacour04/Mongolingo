@@ -1,9 +1,12 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, {useMemo} from 'react';
+import {Link} from 'react-router-dom';
 
 const Home = () => {
+    const fixedWidth = useMemo(() => window.innerWidth, []);
+
     return (
-        <div className="w-full h-full flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8">
+        <div style={{width: fixedWidth, maxWidth: "100vw", margin: "0 auto"}}
+             className="flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8">
             <div className="w-full max-w-4xl mx-auto">
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-8 text-center text-white">
                     Mongolingo

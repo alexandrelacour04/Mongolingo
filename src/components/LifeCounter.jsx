@@ -9,8 +9,6 @@ const LifeCounter = ({ lives }) => {
             display: 'flex',
             gap: 1,
             position: 'fixed',
-            top: 20,
-            right: 20,
             zIndex: 1000
         }}>
             {[...Array(3)].map((_, index) => (

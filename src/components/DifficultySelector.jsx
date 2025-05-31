@@ -1,43 +1,42 @@
-import React from 'react';
+import React from "react";
+import {Button, Box} from "@mui/material";
 
-const DifficultySelector = ({ onSelect }) => {
-    // Mapping entre difficulté et base de données
-    const difficultyToDb = {
-        facile: 'automotive',
-        moyen: 'events',
-        difficile: 'library'
-    };
+const DifficultySelector = ({onSelect}) => {
+    // Mapping entre difficulté et base de données 
+    const difficulties = [
+        {label: "Facile", value: "facile", database: "automotive"},
+        {label: "Moyen", value: "moyen", database: "events"},
+        {label: "Difficile", value: "difficile", database: "library"}
+    ];
 
-    // Lorsque l'utilisateur clique sur une difficulté, on transmet la difficulté et la base correspondante
     const handleSelect = (difficulty) => {
-        const database = difficultyToDb[difficulty];
-        // onSelect est une fonction passée par le parent qui reçoit { difficulty, database }
-        if (onSelect) {
-            onSelect({ difficulty, database });
+        const selected = difficulties.find(d => d.value === difficulty);
+        if (onSelect && selected) {
+            onSelect({difficulty: selected.value, database: selected.database});
         }
     };
 
     return (
-        <div className="flex justify-around">
-            <button
-                className="bg-green-400 hover:bg-green-500 text-white px-4 py-2 rounded"
-                onClick={() => handleSelect('facile')}
-            >
-                Facile
-            </button>
-            <button
-                className="bg-yellow-400 hover:bg-yellow-500 text-white px-4 py-2 rounded"
-                onClick={() => handleSelect('moyen')}
-            >
-                Moyen
-            </button>
-            <button
-                className="bg-red-400 hover:bg-red-500 text-white px-4 py-2 rounded"
-                onClick={() => handleSelect('difficile')}
-            >
-                Difficile
-            </button>
-        </div>
+        <Box
+            sx={{
+                display: "flex",
+                gap: 2,
+                justifyContent: "center",
+                mt: 2,
+                mb: 2,
+            }}
+        >
+            {difficulties.map((diff) => (
+                <Button
+                    key={diff.value}
+                    variant="contained"
+                    color="primary"
+                    onClick={() => handleSelect(diff.value)}
+                >
+                    {diff.label}
+                </Button>
+            ))}
+        </Box>
     );
 };
 

@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
+import React, {useState, useMemo} from 'react';
 import QuizGame from '../components/QuizGame';
 import DifficultySelector from '../components/DifficultySelector';
-import { Box, Typography } from '@mui/material';
+import {Box, Typography} from '@mui/material';
 
 const DatabaseQuiz = () => {
-    // On stocke ici la difficulté et la base associée.
     const [selection, setSelection] = useState(null);
+    const fixedWidth = useMemo(() => window.innerWidth, []);
 
-    const handleDifficultySelect = ({ difficulty, database }) => {
-        setSelection({ difficulty, database });
+    const handleDifficultySelect = ({difficulty, database}) => {
+        setSelection({difficulty, database});
     };
 
     return (
-        <Box sx={{ p: 4 }}>
+        <Box sx={{width: fixedWidth, maxWidth: '90vw', margin: '0 auto'}}>
             {!selection ? (
                 <>
-                    <Typography variant="h4" gutterBottom>
-                        Choisissez votre difficulté
+                    <Typography variant="h4" gutterBottom align="center" sx={{textAlign: 'center'}}>
+                        {selection ? 'Niveau sélectionné' : 'Choisissez votre difficulté'}
                     </Typography>
-                    <DifficultySelector onSelect={handleDifficultySelect} />
+                    <DifficultySelector onSelect={handleDifficultySelect}/>
                 </>
             ) : (
                 <QuizGame
