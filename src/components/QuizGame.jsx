@@ -1,27 +1,12 @@
-import React, {useState, useEffect} from 'react';
-import {
-    Box,
-    Typography,
-    Button,
-    Dialog,
-    DialogTitle,
-    DialogContent,
-    DialogActions,
-    Paper
-} from '@mui/material';
+import React, {useEffect, useState} from 'react';
+import axios from 'axios';
+import {Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Paper, Typography} from '@mui/material';
 import DraggableQueryBuilder from './DraggableQueryBuilder';
 import LifeCounter from './LifeCounter';
 import LightbulbIcon from '@mui/icons-material/Lightbulb';
+import ScoreForm from './ScoreForm';
+import Leaderboard from './Leaderboard';
 
-/**
- * QuizGame component - Main quiz game component that manages the game state and logic
- *
- * @component
- * @param {Object} props - Component props
- * @param {string} props.initialDatabase - Initial database selection
- * @param {string} props.initialDifficulty - Initial difficulty level
- * @param {Function} props.onChangeDifficulty - Callback when difficulty changes
- */
 const QuizGame = ({initialDatabase, initialDifficulty, onChangeDifficulty}) => {
     // Game state
     const [questions, setQuestions] = useState([]);
@@ -32,17 +17,59 @@ const QuizGame = ({initialDatabase, initialDifficulty, onChangeDifficulty}) => {
     const [currentHintIndex, setCurrentHintIndex] = useState(-1);
     const [showHints, setShowHints] = useState(false);
     const [showJson, setShowJson] = useState(false);
+    const [scoreSaved, setScoreSaved] = useState(false);
+    const [top3, setTop3] = useState([]);
+    const [result, setResult] = useState(null);
+    const [collection, setCollection] = useState("classes");
+    const [userQueryInput, setUserQueryInput] = useState("{}");
+    const [error, setError] = useState(null);
+    const [dbResult, setDbResult] = useState(null);
 
-    // Fetch questions when database or difficulty changes
     useEffect(() => {
         fetchQuestions();
     }, [initialDatabase, initialDifficulty]);
 
-    /**
-     * Formats a MongoDB query string for consistent comparison
-     * @param {string} str - Query string to format
-     * @returns {string} Formatted query string
-     */
+    const fetchResult = async (questionId) => {
+        try {
+            const res = await axios.get(`/api/database/result/${questionId}`);
+            setDbResult(res.data.result);
+        } catch (e) {
+            setDbResult({error: e.response?.data?.error || "Erreur lors de l'exécution"});
+        }
+    };
+
+    async function handleValidateMongo(userAnswer) {
+        let parsedQuery;
+        try {
+            parsedQuery = JSON.parse(userAnswer);
+        } catch (err) {
+            setError("Erreur de syntaxe JSON dans la requête !");
+            setResult(null);
+            return;
+        }
+
+        const currentQuestion = questions[currentQuestionIndex];
+        const payload = {
+            dbName: initialDatabase,
+            collection: currentQuestion.collection,
+            operation: currentQuestion.operation,
+            query: parsedQuery
+        };
+
+        try {
+            setError(null);
+            const res = await axios.post('/api/database/execute', payload);
+            if (res.data && res.data.result) {
+                setResult(JSON.stringify(res.data.result, null, 2));
+            } else {
+                setResult("Aucun résultat !");
+            }
+        } catch (e) {
+            setResult(null);
+            setError(e.response?.data?.error || e.message);
+        }
+    }
+
     function formatMongoQuery(str) {
         return str
             .replace(/\{\s*/g, '{ ')
@@ -53,9 +80,6 @@ const QuizGame = ({initialDatabase, initialDifficulty, onChangeDifficulty}) => {
             .trim();
     }
 
-    /**
-     * Fetches questions from API based on selected database and difficulty
-     */
     const fetchQuestions = async () => {
         try {
             const response = await fetch(
@@ -70,20 +94,16 @@ const QuizGame = ({initialDatabase, initialDifficulty, onChangeDifficulty}) => {
         }
     };
 
-    /**
-     * Resets the game state to initial values
-     */
     const resetGame = () => {
         setCurrentQuestionIndex(0);
         setLives(3);
         setGameOver(false);
         setCurrentHintIndex(-1);
         setShowHints(false);
+        setResult(null);
+        setDbResult(null);
     };
 
-    /**
-     * Handles showing the next available hint
-     */
     const handleNextHint = () => {
         if (!questions[currentQuestionIndex]?.hints) return;
         if (currentHintIndex < questions[currentQuestionIndex].hints.length - 1) {
@@ -91,15 +111,11 @@ const QuizGame = ({initialDatabase, initialDifficulty, onChangeDifficulty}) => {
         }
     };
 
-    /**
-     * Handles user answer submission and game progression
-     * @param {string} userAnswer - The user's submitted answer
-     */
     const handleAnswerSubmit = (userAnswer) => {
+        handleValidateMongo(userAnswer);
         const currentQuestion = questions[currentQuestionIndex];
         const isCorrect = formatMongoQuery(userAnswer) === formatMongoQuery(currentQuestion.expectedQuery);
 
-        // Handle incorrect answer
         if (isCorrect === false) {
             const newLives = lives - 1;
             setLives(newLives);
@@ -109,13 +125,16 @@ const QuizGame = ({initialDatabase, initialDifficulty, onChangeDifficulty}) => {
                 setShowGameOverDialog(true);
                 return;
             }
+        } else {
+            fetchResult(currentQuestion.id);
         }
 
-        // Progress to next question or end game
         if (currentQuestionIndex < questions.length - 1) {
             setCurrentQuestionIndex(prev => prev + 1);
             setCurrentHintIndex(-1);
             setShowHints(false);
+            setResult(null);
+            setDbResult(null);
         } else {
             setGameOver(true);
             setShowGameOverDialog(true);
@@ -123,6 +142,7 @@ const QuizGame = ({initialDatabase, initialDifficulty, onChangeDifficulty}) => {
     };
 
     const currentQuestion = questions[currentQuestionIndex];
+    const score = lives > 0 ? questions.length : currentQuestionIndex;
 
     if (!currentQuestion) return null;
 
@@ -196,23 +216,43 @@ const QuizGame = ({initialDatabase, initialDifficulty, onChangeDifficulty}) => {
                 onClose={() => {
                     setShowGameOverDialog(false);
                     onChangeDifficulty();
+                    setScoreSaved(false);
                 }}
             >
                 <DialogTitle>
                     {lives === 0 ? 'Game Over' : 'Quiz Terminé !'}
                 </DialogTitle>
                 <DialogContent>
-                    <Typography>
-                        {lives === 0
-                            ? 'Vous avez épuisé toutes vos vies !'
-                            : `Félicitations ! Vous avez terminé le quiz avec ${lives} vies restantes.`}
-                    </Typography>
+                    {!scoreSaved ? (
+                        <>
+                            <Typography>
+                                {lives === 0
+                                    ? 'Vous avez épuisé toutes vos vies !'
+                                    : `Félicitations ! Vous avez terminé le quiz avec ${lives} vies restantes.`}
+                            </Typography>
+                            <ScoreForm
+                                score={score}
+                                difficulty={initialDifficulty}
+                                database={initialDatabase}
+                                onScoreSaved={top => {
+                                    setScoreSaved(true);
+                                    setTop3(top);
+                                }}
+                            />
+                        </>
+                    ) : (
+                        <>
+                            <Typography variant="h6" sx={{mb: 2}}>Top 3 du niveau :</Typography>
+                            <Leaderboard difficulty={initialDifficulty}/>
+                        </>
+                    )}
                 </DialogContent>
                 <DialogActions>
                     <Button
                         onClick={() => {
                             setShowGameOverDialog(false);
                             onChangeDifficulty();
+                            setScoreSaved(false);
                         }}
                         color="primary"
                         variant="contained"

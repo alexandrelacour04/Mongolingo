@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const Question = require('../models/Question');
+const Question = require('../schemas/Question');
 const config = require('../config/dbConfig');
 
 router.get('/', async (req, res) => {

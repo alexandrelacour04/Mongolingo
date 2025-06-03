@@ -23,11 +23,21 @@ async function connectToDatabase(uri) {
 
 async function initializeCollections(connection, collections) {
     for (const [name, data] of Object.entries(collections)) {
-        const collection = connection.collection(name);
-        await collection.deleteMany({});
-        if (data.length > 0) {
-            await collection.insertMany(data);
-            console.log(`Collection ${name} initialisée avec ${data.length} documents`);
+        if (name === "scores") {
+            const exist = await connection.db.listCollections({name}).hasNext();
+            if (!exist) {
+                await connection.createCollection(name);
+                console.log(`Collection ${name} créée`);
+            } else {
+                console.log(`Collection ${name} : rien à faire`);
+            }
+        } else {
+            const collection = connection.collection(name);
+            await collection.deleteMany({});
+            if (data.length > 0) {
+                await collection.insertMany(data);
+                console.log(`Collection ${name} initialisée avec ${data.length} documents`);
+            }
         }
     }
 }

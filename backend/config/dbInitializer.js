@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const {databases} = require('./dbConfig');
-const Question = require('../models/Question');
+const Question = require('../schemas/Question');
 
 const sampleQuestions = {
     library: [],

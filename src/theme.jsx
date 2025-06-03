@@ -1,5 +1,4 @@
-
-import { createTheme } from '@mui/material/styles';
+import {createTheme} from '@mui/material/styles';
 
 // Définition des couleurs principales
 export const colors = {

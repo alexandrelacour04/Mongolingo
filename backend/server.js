@@ -2,9 +2,11 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const mongoose = require('mongoose');
 const databaseRouter = require('./routes/database');
 const questionsRouter = require('./routes/questions');
 const scoresRouter = require('./routes/score');
+const databaseRoutes = require('./routes/database');
 
 const app = express();
 
@@ -22,6 +24,8 @@ app.use((req, res, next) => {
 app.use('/api/database', databaseRouter);
 app.use('/api/questions', questionsRouter);
 app.use('/api/scores', scoresRouter);
+app.use('/api/database', databaseRoutes);
+app.use('/api', databaseRoutes);
 
 // Servir les fichiers statiques en production
 if (process.env.NODE_ENV === 'production') {

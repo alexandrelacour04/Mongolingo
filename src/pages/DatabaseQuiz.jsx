@@ -1,4 +1,4 @@
-import React, {useState, useMemo} from 'react';
+import React, {useMemo, useState} from 'react';
 import QuizGame from '../components/QuizGame';
 import DifficultySelector from '../components/DifficultySelector';
 import {Box, Typography} from '@mui/material';

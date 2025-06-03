@@ -21,7 +21,13 @@ const config = {
             name: "events",
             uri: "mongodb://localhost:27017/events_db",
             description: "Base de données des événements"
+        },
+        {
+            name: 'score',
+            uri: 'mongodb://localhost:27017/score'
         }
+
+
     ]
 };
 
