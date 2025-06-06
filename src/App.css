@@ -116,6 +116,23 @@ body {
     font-size: 2rem;
 }
 
+/* Styles de boutons et liens */
+.flex.flex-row button {
+    margin: 0;
+    height: 56px;
+    line-height: 1.2;
+}
+
+.MuiButton-root {
+    min-height: unset !important;
+    line-height: 1.2 !important;
+}
+
+a {
+    display: inline-flex;
+    text-decoration: none;
+}
+
 /* Media queries */
 @media (max-width: 768px) {
     .quiz-container {

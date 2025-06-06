@@ -242,7 +242,6 @@ const QuizGame = ({initialDatabase, initialDifficulty, onChangeDifficulty}) => {
                         </>
                     ) : (
                         <>
-                            <Typography variant="h6" sx={{mb: 2}}>Top 3 du niveau :</Typography>
                             <Leaderboard difficulty={initialDifficulty}/>
                         </>
                     )}

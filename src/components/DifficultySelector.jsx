@@ -1,5 +1,6 @@
 import React from "react";
 import {Box, Button} from "@mui/material";
+import DatabaseImport from './DatabaseImport';
 
 /**
  * Component for selecting difficulty level in the quiz application
@@ -20,6 +21,17 @@ const DifficultySelector = ({onSelect}) => {
     ];
 
     /**
+     * Handles successful database import
+     * @param {string} database The imported database name
+     */
+    const handleImportSuccess = (database) => {
+        onSelect({
+            difficulty: "facile",
+            database: database
+        });
+    };
+
+    /**
      * Handles the selection of a difficulty level
      * @param {string} difficulty The selected difficulty value
      */
@@ -31,26 +43,28 @@ const DifficultySelector = ({onSelect}) => {
     };
 
     return (
-        <Box
-            sx={{
+        <Box sx={{display: "flex", flexDirection: "column", gap: 2}}>
+            <Box sx={{
                 display: "flex",
                 gap: 2,
                 justifyContent: "center",
                 mt: 2,
                 mb: 2,
-            }}
-        >
-            {/* Map through difficulties array to render buttons */}
-            {difficulties.map((diff) => (
-                <Button
-                    key={diff.value}
-                    variant="contained"
-                    color="primary"
-                    onClick={() => handleSelect(diff.value)}
-                >
-                    {diff.label}
-                </Button>
-            ))}
+            }}>
+                {difficulties.map((diff) => (
+                    <Button
+                        key={diff.value}
+                        variant="contained"
+                        color="primary"
+                        onClick={() => handleSelect(diff.value)}
+                    >
+                        {diff.label}
+                    </Button>
+                ))}
+            </Box>
+            <Box sx={{display: 'flex', justifyContent: 'center'}}>
+                <DatabaseImport onImportSuccess={handleImportSuccess}/>
+            </Box>
         </Box>
     );
 };

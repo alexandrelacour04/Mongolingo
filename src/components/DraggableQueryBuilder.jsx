@@ -157,7 +157,11 @@ const shuffle = (arr) => {
  * @param {Function} props.onLifeLost - Callback when incorrect answer is given
  */
 const DraggableQueryBuilder = ({
-                                   expectedQuery, onSubmit, dbName = "automotive", collection = "classes"
+                                   expectedQuery,
+                                   onSubmit,
+                                   dbName = "automotive",
+                                   collection = "classes",
+                                   difficulty = "easy"
                                }) => {
     const [blocks, setBlocks] = useState([]); // Available blocks
     const [answerBlocks, setAnswerBlocks] = useState([]); // Blocks in answer area
@@ -268,7 +272,6 @@ const DraggableQueryBuilder = ({
     const handleCloseDialog = () => {
         setOpenDialog(false);
         onSubmit(lastAnswer);
-
     };
 
     return (<DragDropContext onDragEnd={handleDragEnd}>
@@ -394,27 +397,27 @@ const DraggableQueryBuilder = ({
                     {isCorrect ? "Vous avez construit la requête correctement." : "La requête n'est pas correcte. Réessayez !"}
                 </Typography>
                 {/* Chargement */}
-                {dbExecLoading && (<Typography sx={{mt: 2}} color="info.main">
+                {dbExecLoading && isCorrect && (<Typography sx={{mt: 2}} color="info.main">
                     Exécution MongoDB en cours...
                 </Typography>)}
                 {/* Résultat de la requête côté mongo */}
-                {dbExecResult && dbExecResult.success && (<Box sx={{mt: 2}}>
+                {dbExecResult && dbExecResult.success && isCorrect && (<Box sx={{mt: 2}}>
                     <Typography color="success.main">
                         ✔ Succès MongoDB : {dbExecResult.count} document(s) trouvé(s).
                     </Typography>
                     <Paper variant="outlined"
                            sx={{maxHeight: 180, overflow: "auto", mt: 1, p: 1, background: "#f9f9f9"}}>
-                                <pre style={{margin: 0, fontSize: "0.85em"}}>
-                                    {JSON.stringify(dbExecResult.data, null, 2)}
-                                </pre>
+                <pre style={{margin: 0, fontSize: "0.85em"}}>
+                    {JSON.stringify(dbExecResult.data, null, 2)}
+                </pre>
                     </Paper>
                 </Box>)}
-                {dbExecResult && !dbExecResult.success && (<Typography sx={{mt: 2}} color="error">
+                {dbExecResult && !dbExecResult.success && isCorrect && (<Typography sx={{mt: 2}} color="error">
                     Erreur MongoDB&nbsp;: {dbExecResult.error}
                 </Typography>)}
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleCloseDialog} autoFocus>
+                <Button onClick={handleCloseDialog} variant="contained" color="primary" autoFocus>
                     Fermer
                 </Button>
             </DialogActions>
