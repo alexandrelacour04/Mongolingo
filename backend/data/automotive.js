@@ -3,25 +3,60 @@ module.exports = {
     description: "Gestion d'une salle de sport",
     collections: {
         classes: [
-            { classId: "CL001", name: "Yoga Matinal", date: "2025-06-01", time: "08:00", capacity: 20, instructor: "Anna Smith" },
-            { classId: "CL002", name: "Zumba Énergique", date: "2025-06-02", time: "18:00", capacity: 15, instructor: "Mark Jones" },
-            { classId: "CL003", name: "Pilates Avancé", date: "2025-06-03", time: "10:00", capacity: 12, instructor: "Anna Smith" },
-            { classId: "CL004", name: "Cardio Blast", date: "2025-06-04", time: "17:00", capacity: 25, instructor: "Laura Brown" },
-            { classId: "CL005", name: "Stretching", date: "2025-06-05", time: "09:00", capacity: 18, instructor: "Mark Jones" }
+            {
+                classId: "CL001",
+                name: "Yoga Matinal",
+                date: "2025-06-01",
+                time: "08:00",
+                capacity: 20,
+                instructor: "Anna Smith"
+            },
+            {
+                classId: "CL002",
+                name: "Zumba Énergique",
+                date: "2025-06-02",
+                time: "18:00",
+                capacity: 15,
+                instructor: "Mark Jones"
+            },
+            {
+                classId: "CL003",
+                name: "Pilates Avancé",
+                date: "2025-06-03",
+                time: "10:00",
+                capacity: 12,
+                instructor: "Anna Smith"
+            },
+            {
+                classId: "CL004",
+                name: "Cardio Blast",
+                date: "2025-06-04",
+                time: "17:00",
+                capacity: 25,
+                instructor: "Laura Brown"
+            },
+            {
+                classId: "CL005",
+                name: "Stretching",
+                date: "2025-06-05",
+                time: "09:00",
+                capacity: 18,
+                instructor: "Mark Jones"
+            }
         ],
         members: [
-            { memberId: "MB001", name: "Sophie Lefèvre", email: "sophie.lefevre@example.com", membershipType: "Premium" },
-            { memberId: "MB002", name: "Lucas Dubois", email: "lucas.dubois@example.com", membershipType: "Standard" },
-            { memberId: "MB003", name: "Marie Claire", email: "marie.claire@example.com", membershipType: "Basic" },
-            { memberId: "MB004", name: "Paul Martin", email: "paul.martin@example.com", membershipType: "Premium" },
-            { memberId: "MB005", name: "Emma Durand", email: "emma.durand@example.com", membershipType: "Standard" }
+            {memberId: "MB001", name: "Sophie Lefèvre", email: "sophie.lefevre@example.com", membershipType: "Premium"},
+            {memberId: "MB002", name: "Lucas Dubois", email: "lucas.dubois@example.com", membershipType: "Standard"},
+            {memberId: "MB003", name: "Marie Claire", email: "marie.claire@example.com", membershipType: "Basic"},
+            {memberId: "MB004", name: "Paul Martin", email: "paul.martin@example.com", membershipType: "Premium"},
+            {memberId: "MB005", name: "Emma Durand", email: "emma.durand@example.com", membershipType: "Standard"}
         ],
         bookings: [
-            { classId: "CL001", memberId: "MB001", bookingDate: "2025-05-20" },
-            { classId: "CL002", memberId: "MB002", bookingDate: "2025-05-21" },
-            { classId: "CL003", memberId: "MB003", bookingDate: "2025-05-22" },
-            { classId: "CL004", memberId: "MB004", bookingDate: "2025-05-23" },
-            { classId: "CL005", memberId: "MB005", bookingDate: "2025-05-24" }
+            {classId: "CL001", memberId: "MB001", bookingDate: "2025-05-20"},
+            {classId: "CL002", memberId: "MB002", bookingDate: "2025-05-21"},
+            {classId: "CL003", memberId: "MB003", bookingDate: "2025-05-22"},
+            {classId: "CL004", memberId: "MB004", bookingDate: "2025-05-23"},
+            {classId: "CL005", memberId: "MB005", bookingDate: "2025-05-24"}
         ]
     },
     questions: [

@@ -3,14 +3,14 @@ const questionSchema = {
     type: 'object',
     required: ['difficulty', 'question', 'expectedQuery'],
     properties: {
-        difficulty: { type: 'string', enum: ['facile', 'moyen', 'difficile'] },
-        question: { type: 'string' },
-        expectedQuery: { type: 'string' },
+        difficulty: {type: 'string', enum: ['facile', 'moyen', 'difficile']},
+        question: {type: 'string'},
+        expectedQuery: {type: 'string'},
         hints: {
             type: 'array',
-            items: { type: 'string' }
+            items: {type: 'string'}
         },
-        points: { type: 'number' }
+        points: {type: 'number'}
     }
 };
 
@@ -18,9 +18,9 @@ const databaseSchema = {
     type: 'object',
     required: ['name', 'questions', 'collections'],
     properties: {
-        name: { type: 'string' },
-        description: { type: 'string' },
-        collections: { type: 'object' },
+        name: {type: 'string'},
+        description: {type: 'string'},
+        collections: {type: 'object'},
         questions: {
             type: 'array',
             items: questionSchema

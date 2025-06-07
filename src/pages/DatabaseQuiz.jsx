@@ -1,7 +1,7 @@
 import React, {useMemo, useState} from 'react';
 import QuizGame from '../components/QuizGame';
 import DifficultySelector from '../components/DifficultySelector';
-import {Box, Typography, Button, Menu, MenuItem} from '@mui/material';
+import {Box, Button, Menu, MenuItem, Typography} from '@mui/material';
 import axios from 'axios';
 
 /**

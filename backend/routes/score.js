@@ -8,37 +8,37 @@ const Score = require('../schemas/Score');
  */
 router.post('/', async (req, res) => {
     try {
-        const { pseudo, password, score, difficulty, database } = req.body;
+        const {pseudo, password, score, difficulty, database} = req.body;
         if (!pseudo || !password || score === undefined || !difficulty) {
-            return res.status(400).json({ error: 'Pseudo, mot de passe, score et difficulté sont requis.' });
+            return res.status(400).json({error: 'Pseudo, mot de passe, score et difficulté sont requis.'});
         }
 
         // Rechercher s'il existe déjà ce pseudo pour ce niveau
-        const userEntry = await Score.findOne({ pseudo, difficulty });
+        const userEntry = await Score.findOne({pseudo, difficulty});
 
         if (userEntry) {
             if (userEntry.password !== password) {
-                return res.status(401).json({ error: 'Mot de passe incorrect.' });
+                return res.status(401).json({error: 'Mot de passe incorrect.'});
             }
             userEntry.score = score;
             userEntry.database = database;
             await userEntry.save();
         } else {
             // Création d'une nouvelle entrée utilisateur/niveau
-            const newScore = new Score({ pseudo, password, score, difficulty, database });
+            const newScore = new Score({pseudo, password, score, difficulty, database});
             await newScore.save();
         }
 
         // Récupère le top 3 des scores pour ce niveau
-        const top3 = await Score.find({ difficulty })
-            .sort({ score: -1, updatedAt: 1 })
+        const top3 = await Score.find({difficulty})
+            .sort({score: -1, updatedAt: 1})
             .limit(3)
             .select('pseudo score -_id');
 
-        res.status(201).json({ success: true, top3 });
+        res.status(201).json({success: true, top3});
     } catch (error) {
         console.error('Erreur lors de la sauvegarde du score :', error);
-        res.status(500).json({ error: 'Erreur lors de la sauvegarde.' });
+        res.status(500).json({error: 'Erreur lors de la sauvegarde.'});
     }
 });
 
@@ -47,14 +47,14 @@ router.post('/', async (req, res) => {
  */
 router.get('/top/:difficulty', async (req, res) => {
     try {
-        const { difficulty } = req.params;
-        const top3 = await Score.find({ difficulty })
-            .sort({ score: -1, updatedAt: 1 })
+        const {difficulty} = req.params;
+        const top3 = await Score.find({difficulty})
+            .sort({score: -1, updatedAt: 1})
             .limit(3)
             .select('pseudo score -_id');
         res.json(top3);
     } catch (error) {
-        res.status(500).json({ error: 'Erreur récupération top scores.' });
+        res.status(500).json({error: 'Erreur récupération top scores.'});
     }
 });
 

@@ -3,25 +3,55 @@ module.exports = {
     description: "Gestion de bibliothèque universitaire",
     collections: {
         books: [
-            { title: "Introduction à MongoDB", author: "John Doe", isbn: "123-456-789", available: true, category: "Informatique" },
-            { title: "Les Bases de Données NoSQL", author: "Jane Smith", isbn: "987-654-321", available: false, category: "Informatique" },
-            { title: "Algèbre Linéaire", author: "Alan Turing", isbn: "111-222-333", available: true, category: "Mathématiques" },
-            { title: "Philosophie Moderne", author: "Emma Brown", isbn: "444-555-666", available: true, category: "Philosophie" },
-            { title: "Programmation Python", author: "John Doe", isbn: "777-888-999", available: false, category: "Informatique" }
+            {
+                title: "Introduction à MongoDB",
+                author: "John Doe",
+                isbn: "123-456-789",
+                available: true,
+                category: "Informatique"
+            },
+            {
+                title: "Les Bases de Données NoSQL",
+                author: "Jane Smith",
+                isbn: "987-654-321",
+                available: false,
+                category: "Informatique"
+            },
+            {
+                title: "Algèbre Linéaire",
+                author: "Alan Turing",
+                isbn: "111-222-333",
+                available: true,
+                category: "Mathématiques"
+            },
+            {
+                title: "Philosophie Moderne",
+                author: "Emma Brown",
+                isbn: "444-555-666",
+                available: true,
+                category: "Philosophie"
+            },
+            {
+                title: "Programmation Python",
+                author: "John Doe",
+                isbn: "777-888-999",
+                available: false,
+                category: "Informatique"
+            }
         ],
         students: [
-            { studentId: "ST001", name: "Marie Dupont", department: "Informatique", yearOfStudy: 2 },
-            { studentId: "ST002", name: "Pierre Martin", department: "Mathématiques", yearOfStudy: 3 },
-            { studentId: "ST003", name: "Claire Dubois", department: "Philosophie", yearOfStudy: 1 },
-            { studentId: "ST004", name: "Luc Durand", department: "Informatique", yearOfStudy: 4 },
-            { studentId: "ST005", name: "Sophie Lefèvre", department: "Mathématiques", yearOfStudy: 2 }
+            {studentId: "ST001", name: "Marie Dupont", department: "Informatique", yearOfStudy: 2},
+            {studentId: "ST002", name: "Pierre Martin", department: "Mathématiques", yearOfStudy: 3},
+            {studentId: "ST003", name: "Claire Dubois", department: "Philosophie", yearOfStudy: 1},
+            {studentId: "ST004", name: "Luc Durand", department: "Informatique", yearOfStudy: 4},
+            {studentId: "ST005", name: "Sophie Lefèvre", department: "Mathématiques", yearOfStudy: 2}
         ],
         loans: [
-            { bookId: "123-456-789", studentId: "ST001", loanDate: "2024-01-01", returnDate: "2024-01-15" },
-            { bookId: "987-654-321", studentId: "ST002", loanDate: "2024-02-01", returnDate: null },
-            { bookId: "111-222-333", studentId: "ST003", loanDate: "2024-03-01", returnDate: "2024-03-20" },
-            { bookId: "444-555-666", studentId: "ST004", loanDate: "2024-04-01", returnDate: null },
-            { bookId: "777-888-999", studentId: "ST005", loanDate: "2024-05-01", returnDate: "2024-05-10" }
+            {bookId: "123-456-789", studentId: "ST001", loanDate: "2024-01-01", returnDate: "2024-01-15"},
+            {bookId: "987-654-321", studentId: "ST002", loanDate: "2024-02-01", returnDate: null},
+            {bookId: "111-222-333", studentId: "ST003", loanDate: "2024-03-01", returnDate: "2024-03-20"},
+            {bookId: "444-555-666", studentId: "ST004", loanDate: "2024-04-01", returnDate: null},
+            {bookId: "777-888-999", studentId: "ST005", loanDate: "2024-05-01", returnDate: "2024-05-10"}
         ]
     },
     questions: [

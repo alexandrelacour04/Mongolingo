@@ -1,4 +1,4 @@
-const { MongoClient } = require('mongodb');
+const {MongoClient} = require('mongodb');
 const automotive = require('../data/automotive');
 
 const uri = 'mongodb://localhost:27017/automotive'; // adapte l'URI selon ton environnement
@@ -11,7 +11,7 @@ function parseQuery(queryString) {
         const collection = match[1];
         const filter = match[2] ? eval('(' + match[2] + ')') : {};
         const sort = match[4] ? eval('(' + match[4] + ')') : undefined;
-        return { type: 'find', collection, filter, sort };
+        return {type: 'find', collection, filter, sort};
     }
 
     // pour aggregate ex: db.bookings.aggregate([ ... ])
@@ -26,7 +26,7 @@ function parseQuery(queryString) {
             // gestion d'erreur simple
             pipeline = [];
         }
-        return { type: 'aggregate', collection, pipeline };
+        return {type: 'aggregate', collection, pipeline};
     }
     return null;
 }

@@ -3,25 +3,60 @@ module.exports = {
     description: "Gestion d'organisation d'événements",
     collections: {
         events: [
-            { eventId: "EV001", title: "Conférence Tech 2025", date: "2025-06-01", location: "Paris", capacity: 100, type: "Conférence" },
-            { eventId: "EV002", title: "Atelier MongoDB", date: "2025-07-15", location: "Lyon", capacity: 50, type: "Atelier" },
-            { eventId: "EV003", title: "Salon de l'Innovation", date: "2025-08-01", location: "Marseille", capacity: 200, type: "Salon" },
-            { eventId: "EV004", title: "Hackathon IA", date: "2025-09-10", location: "Paris", capacity: 80, type: "Hackathon" },
-            { eventId: "EV005", title: "Séminaire Data", date: "2025-10-05", location: "Lyon", capacity: 60, type: "Séminaire" }
+            {
+                eventId: "EV001",
+                title: "Conférence Tech 2025",
+                date: "2025-06-01",
+                location: "Paris",
+                capacity: 100,
+                type: "Conférence"
+            },
+            {
+                eventId: "EV002",
+                title: "Atelier MongoDB",
+                date: "2025-07-15",
+                location: "Lyon",
+                capacity: 50,
+                type: "Atelier"
+            },
+            {
+                eventId: "EV003",
+                title: "Salon de l'Innovation",
+                date: "2025-08-01",
+                location: "Marseille",
+                capacity: 200,
+                type: "Salon"
+            },
+            {
+                eventId: "EV004",
+                title: "Hackathon IA",
+                date: "2025-09-10",
+                location: "Paris",
+                capacity: 80,
+                type: "Hackathon"
+            },
+            {
+                eventId: "EV005",
+                title: "Séminaire Data",
+                date: "2025-10-05",
+                location: "Lyon",
+                capacity: 60,
+                type: "Séminaire"
+            }
         ],
         attendees: [
-            { attendeeId: "AT001", name: "Alice Durand", email: "alice.durand@example.com", phone: "0123456789" },
-            { attendeeId: "AT002", name: "Bob Martin", email: "bob.martin@example.com", phone: "0987654321" },
-            { attendeeId: "AT003", name: "Clara Petit", email: "clara.petit@example.com", phone: "0234567890" },
-            { attendeeId: "AT004", name: "David Roux", email: "david.roux@example.com", phone: "0345678901" },
-            { attendeeId: "AT005", name: "Emma Blanc", email: "emma.blanc@example.com", phone: "0456789012" }
+            {attendeeId: "AT001", name: "Alice Durand", email: "alice.durand@example.com", phone: "0123456789"},
+            {attendeeId: "AT002", name: "Bob Martin", email: "bob.martin@example.com", phone: "0987654321"},
+            {attendeeId: "AT003", name: "Clara Petit", email: "clara.petit@example.com", phone: "0234567890"},
+            {attendeeId: "AT004", name: "David Roux", email: "david.roux@example.com", phone: "0345678901"},
+            {attendeeId: "AT005", name: "Emma Blanc", email: "emma.blanc@example.com", phone: "0456789012"}
         ],
         registrations: [
-            { eventId: "EV001", attendeeId: "AT001", registrationDate: "2025-01-10" },
-            { eventId: "EV002", attendeeId: "AT002", registrationDate: "2025-02-01" },
-            { eventId: "EV003", attendeeId: "AT003", registrationDate: "2025-03-15" },
-            { eventId: "EV004", attendeeId: "AT004", registrationDate: "2025-04-20" },
-            { eventId: "EV005", attendeeId: "AT005", registrationDate: "2025-05-01" }
+            {eventId: "EV001", attendeeId: "AT001", registrationDate: "2025-01-10"},
+            {eventId: "EV002", attendeeId: "AT002", registrationDate: "2025-02-01"},
+            {eventId: "EV003", attendeeId: "AT003", registrationDate: "2025-03-15"},
+            {eventId: "EV004", attendeeId: "AT004", registrationDate: "2025-04-20"},
+            {eventId: "EV005", attendeeId: "AT005", registrationDate: "2025-05-01"}
         ]
     },
     questions: [

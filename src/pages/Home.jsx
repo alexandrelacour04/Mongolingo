@@ -1,7 +1,7 @@
-import React, {useMemo, useState, useEffect} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
-import { Modal, Box, Button, Tabs, Tab, Typography, Paper, CircularProgress } from '@mui/material';
+import {Box, Button, CircularProgress, Modal, Paper, Tab, Tabs, Typography} from '@mui/material';
 
 const modalStyle = {
     position: 'absolute',
@@ -20,7 +20,7 @@ const modalStyle = {
 };
 
 const TabPanel = (props) => {
-    const { children, value, index, ...other } = props;
+    const {children, value, index, ...other} = props;
     return (
         <div
             role="tabpanel"
@@ -28,10 +28,10 @@ const TabPanel = (props) => {
             id={`schema-tabpanel-${index}`}
             aria-labelledby={`schema-tab-${index}`}
             {...other}
-            style={{ flexGrow: 1, overflowY: 'auto', marginTop: '16px' }}
+            style={{flexGrow: 1, overflowY: 'auto', marginTop: '16px'}}
         >
             {value === index && (
-                <Box sx={{ p: 0 }}>
+                <Box sx={{p: 0}}>
                     {children}
                 </Box>
             )}
@@ -76,7 +76,7 @@ const Home = () => {
                     {/* Premier bouton */}
                     <Link
                         to="/database-quiz"
-                        style={{ textDecoration: 'none' }} // Pour enlever le soulignement du lien
+                        style={{textDecoration: 'none'}} // Pour enlever le soulignement du lien
                     >
                         <Button
                             variant="contained"
@@ -92,8 +92,8 @@ const Home = () => {
                                 whiteSpace: 'nowrap',
                                 margin: '0 auto',
                                 marginTop: '16px',
+                                boxShadow: 'none',
                                 fontWeight: 'bold',
-                                boxShadow: 2,
                                 '&:hover': {
                                     backgroundColor: '#059669',
                                     transform: 'translateY(-2px)',
@@ -121,6 +121,7 @@ const Home = () => {
                             whiteSpace: 'nowrap',
                             margin: '0 auto',
                             marginTop: '16px',
+                            boxShadow: 'none',
                             '&:hover': {
                                 backgroundColor: '#059669'
                             }
@@ -140,13 +141,13 @@ const Home = () => {
                             Schémas des Bases de Données
                         </Typography>
                         {loading ? (
-                            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-                                <CircularProgress />
-                                <Typography sx={{ ml: 2 }}>Chargement des schémas...</Typography>
+                            <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%'}}>
+                                <CircularProgress/>
+                                <Typography sx={{ml: 2}}>Chargement des schémas...</Typography>
                             </Box>
                         ) : displayableSchemas.length > 0 ? (
                             <>
-                                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                                <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
                                     <Tabs value={selectedTab} onChange={handleTabChange}>
                                         {displayableSchemas.map(([schemaName], index) => (
                                             <Tab
@@ -160,11 +161,13 @@ const Home = () => {
                                 {displayableSchemas.map(([schemaName, schemaDefinition], index) => (
                                     <TabPanel value={selectedTab} index={index} key={schemaName}>
                                         {Object.entries(schemaDefinition).map(([collection, definition]) => (
-                                            <Paper elevation={2} sx={{ mb: 2, p: 2 }} key={collection}>
-                                                <Typography variant="subtitle1" sx={{ fontWeight: 'bold', color: 'primary.main' }}>
+                                            <Paper elevation={2} sx={{mb: 2, p: 2}} key={collection}>
+                                                <Typography variant="subtitle1"
+                                                            sx={{fontWeight: 'bold', color: 'primary.main'}}>
                                                     Collection: {collection}
                                                 </Typography>
-                                                <pre className="bg-gray-100 text-black p-2 rounded text-xs whitespace-pre-wrap max-h-60 overflow-auto">
+                                                <pre
+                                                    className="bg-gray-100 text-black p-2 rounded text-xs whitespace-pre-wrap max-h-60 overflow-auto">
                                                     {JSON.stringify(definition.fields || definition, null, 2)}
                                                 </pre>
                                             </Paper>
@@ -177,7 +180,7 @@ const Home = () => {
                         )}
                         <Button variant="contained" onClick={handleCloseModal} color="primary"
                                 sx={{mt: 2, alignSelf: 'flex-end'}}>
-                        Fermer
+                            Fermer
                         </Button>
                     </Box>
                 </Modal>
